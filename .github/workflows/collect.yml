@@ -1,0 +1,48 @@
+name: Collect Deals
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+jobs:
+  collect-and-publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out the current main branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check parser before requesting public sources
+        run: npm test
+      - name: Collect public promotions and news
+        run: npm run collect
+      - name: Save updated JSON to the repository
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/deals.json
+          if ! git diff --cached --quiet; then
+            git commit -m "data: refresh MacBook deal feed"
+            git push origin HEAD:main
+          fi
+      - name: Build fresh GitHub Pages bundle
+        run: npm run build
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+      - name: Deploy fresh Pages site
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,19 @@
+맥딜 레이더 — GitHub Pages + 로컬 PC 전용 (V3)
+==========================================
+!!! Cloudflare를 요청하는 화면이 나오면 잘못된 폴더/옛날 프로그램을 실행하고 있는 것입니다. !!!
+
+1) 이전 mac-deal-radar-project 폴더는 건드리지 마세요.
+2) 이 ZIP을 새 위치에 압축 해제하고, mac-deal-radar-free-v3 폴더로 이동하세요.
+3) 해당 폴더 안의 START-HERE-GITHUB-FREE.cmd 파일만 더블클릭하세요.
+4) 첫 화면에서 V3.0.0 / NO CLOUDFLARE / RUNNING FROM 경로를 확인하세요.
+5) GitHub CLI 로그인이 필요하면 승인하고, 끝날 때 Repository와 Website 주소를 확인하세요.
+6) 이후 PC에서 수집하고-게시.cmd를 실행하면 assets/deals.json에 저장하고 GitHub로 보냅니다.
+   수집만.cmd는 GitHub에 올리지 않고 PC 파일만 바꿉니다.
+
+정상 사이트: https://깃허브아이디.github.io/mac-deal-radar/
+잘못된 사이트: https://.github.io/mac-deal-radar/  (사용자명 없음)
+
+주의: GitHub Pages 웹사이트의 버튼은 이미 GitHub에 게시된 파일을 '새로 고침'합니다.
+웹버튼만으로 PC에서 로컬 크롤러를 실행할 수는 없습니다.
+수집 파일: assets/deals.json
+로그와 상세 설명: README.md

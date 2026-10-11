@@ -1,0 +1,13 @@
+{
+  "name": "mac-deal-radar",
+  "version": "3.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Mac Deal Radar: no Cloudflare, public Github Pages + local PC collector",
+  "scripts": {
+    "dev": "python -m http.server 8000",
+    "collect": "node scripts/collect.mjs",
+    "build": "node scripts/prepare-pages.mjs",
+    "test": "node tests/extract.test.mjs && node tests/collector.test.mjs"
+  }
+}

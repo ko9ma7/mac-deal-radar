@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import {parseOfficialPage,parseIstoreDeals,parseRSS,makeId,cleanHTML,findDiscount} from '../collector/extract.js';
+const astore={id:'astore-suwon',store:'A-STORE',location:'수원점',url:'https://pf.kakao.com/_duxiaj/98848573'};
+const html='<html><head><title>에이스토어 수원</title></head><body><h1>Mac M3 전품목 50% 할인</h1><p>이마트 신세계PLUS 삼성카드 쿠폰</p><p>맥북 전체 품절</p></body></html>';
+const deals=parseOfficialPage(html,astore,makeId);
+assert.equal(deals.length,1);assert.equal(deals[0].status,'soldout');assert.equal(deals[0].discountPercent,50);
+assert.equal(findDiscount('Mac M3 전품목 50% 할인'),50);
+assert.ok(cleanHTML('<p>MacBook &amp; Mac</p>').includes('MacBook & Mac'));
+const istore={id:'istore',store:'i-Store',location:'세일',url:'https://www.i-store.co.kr/promotion/event_view?event=4'};
+const fakeShop='<div>단종 제품 할인 - Mac</div><h3>MacBook Pro 14 M3 8GB 1TB</h3><span>₩2,660,000</span><b>₩2,120,000</b>';
+const parsed=parseIstoreDeals(fakeShop,istore,makeId);assert.equal(parsed.length,1);assert.equal(parsed[0].price,2120000);
+const xml='<rss><channel><item><title>맥북 대란 할인 소식</title><link>https://news.google.com/articles/abc</link><pubDate>'+new Date().toUTCString()+'</pubDate></item></channel></rss>';
+assert.equal(parseRSS(xml,{name:'뉴스'},makeId).length,1);
+console.log('✓ 할인/품절/가격/RSS 파서 테스트 통과');
